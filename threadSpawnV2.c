@@ -2,9 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
-#include <sys/types.h>
 #include <string.h>
-#include <sys/resource.h>
 
 struct Registers{
 	char *RAX,*RBX,*RCX,*RDX,*PC,*R0;
@@ -23,11 +21,6 @@ typedef struct{
 	char *status; 
 	char *user_id;
 } Thread;
-
-typedef struct{
-	char *thread_id;
-    char *next;
-} Node;
 
 char* get_pid_str(Thread *thread) {
     pid_t pid = getpid();
@@ -57,14 +50,6 @@ void thread_create(Thread *thread){
 	thread->timestamp = time_buff;
     thread->status = "Ready";
 	thread->user_id = ("User Id: %d",get_uid_str(thread));
-}
-
-char* get_user(int userid){
-	if(userid == 0){
-	return "Root";
-	}else{
-	return "Non-Root";
-	}
 }
 
 int main(int argc,char *argv[]){
